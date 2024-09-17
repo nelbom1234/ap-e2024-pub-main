@@ -4,8 +4,6 @@ module APL.AST
   )
 where
 
-import Control.Monad (ap, liftM)
-
 type VName = String
 
 data Exp
@@ -13,7 +11,7 @@ data Exp
   | CstBool Bool
   | Add Exp Exp
   | Sub Exp Exp
-  | Mul Exp Exp 
+  | Mul Exp Exp
   | Div Exp Exp
   | Pow Exp Exp
   | Eql Exp Exp
@@ -23,4 +21,7 @@ data Exp
   | Lambda VName Exp
   | Apply Exp Exp
   | TryCatch Exp Exp
+  | Print String Exp
+  | KvPut Exp Exp
+  | KvGet Exp
   deriving (Eq, Show)
