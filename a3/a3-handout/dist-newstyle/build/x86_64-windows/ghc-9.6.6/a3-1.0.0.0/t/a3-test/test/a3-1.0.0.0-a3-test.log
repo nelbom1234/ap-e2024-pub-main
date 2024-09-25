@@ -1,0 +1,55 @@
+Test suite a3-test: RUNNING...
+Parsing
+  Constants
+    123:                                   OK
+     123:                                  OK
+    123 :                                  OK
+    123f:                                  OK
+    true:                                  OK
+    false:                                 OK
+  Basic operators
+    x+y:                                   OK
+    x-y:                                   OK
+    x*y:                                   OK
+    x/y:                                   OK
+  Operator priority
+    x+y+z:                                 OK
+    x+y-z:                                 OK
+    x+y*z:                                 OK
+    x*y*z:                                 OK
+    x/y/z:                                 OK
+  Conditional expressions
+    if x then y else z:                    OK
+    if x then y else if x then y else z:   OK
+    if x then (if x then y else z) else z: OK
+    1 + if x then y else z:                OK
+  Lexing edge cases
+    2 :                                    OK
+     2:                                    OK
+  functions
+    x y z:                                 OK
+    x(y z):                                OK
+    x (y + z):                             OK
+    x if x then y else z:                  OK
+  equality and power
+    x == y:                                OK
+    2 == 3:                                OK
+    x+y==y+x:                              OK
+    x**y:                                  OK
+    x*y**z:                                OK
+  printing
+    print "foo" x:                         OK
+    print "bar" 3:                         OK
+  Map
+    put x y:                               OK
+    get x + y:                             OK
+  pLExp
+    let x = y in z:                        OK
+    let true = y in z:                     OK
+    x let v = 2 in v:                      OK
+    \x -> y + z:                           OK
+    try x + y catch y - z:                 OK
+
+All 39 tests passed (0.01s)
+Test suite a3-test: PASS
+Test suite logged to: C:\Users\NIN\Desktop\code\ap_dnur\ap-e2024-pub-main\a3\a3-handout\dist-newstyle\build\x86_64-windows\ghc-9.6.6\a3-1.0.0.0\t\a3-test\test\a3-1.0.0.0-a3-test.log

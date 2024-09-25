@@ -69,7 +69,7 @@ failure s = EvalM $ \_env state -> (Left s, state)
 catch :: EvalM a -> EvalM a -> EvalM a
 catch (EvalM m1) (EvalM m2) = EvalM $ \env state ->
   case m1 env state of
-    (Left _, state' )-> m2 env state'
+    (Left _, state' ) -> m2 env state'
     (Right x, state') -> (Right x, state')
 
 getState :: EvalM (Map Val Val, Print)
