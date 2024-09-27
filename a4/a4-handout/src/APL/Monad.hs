@@ -9,11 +9,12 @@ module APL.Monad
     getState,
     putState,
     modifyState,
+    evalPrint,
+    catch,
+    failure,
     evalKvGet,
     evalKvPut,
-    evalPrint,
-    failure,
-    catch,
+    transaction,
     EvalM,
     Val (..),
     EvalOp (..),
@@ -66,7 +67,7 @@ instance (Functor e) => Applicative (Free e) where
 instance (Functor e) => Monad (Free e) where
   Pure x >>= f = f x
   Free g >>= f = Free $ h <$> g
-    where 
+    where
       h x = x >>= f
 
 data EvalOp a
@@ -75,13 +76,21 @@ data EvalOp a
   | StatePutOp State a
   | PrintOp String a
   | ErrorOp Error
+  | TryCatchOp a a
+  | KvGetOp Val (Val -> a)
+  | KvPutOp Val Val a
+  | TransactionOp (EvalM ()) a
 
 instance Functor EvalOp where
-  fmap f (ReadOp k) = ReadOp $ \x -> f (k x)
+  fmap f (ReadOp k) = ReadOp $ f . k
   fmap f (StateGetOp k) = StateGetOp $ f . k
   fmap f (StatePutOp s m) = StatePutOp s $ f m
   fmap f (PrintOp p m) = PrintOp p $ f m
   fmap _ (ErrorOp e) = ErrorOp e
+  fmap f (TryCatchOp e1 e2) = TryCatchOp (f e1) (f e2)
+  fmap f (KvGetOp key k) = KvGetOp key (f . k)
+  fmap f (KvPutOp key val m) = KvPutOp key val (f m)
+  fmap f (TransactionOp payload m) = TransactionOp payload $ f m
 
 type EvalM a = Free EvalOp a
 
@@ -116,10 +125,13 @@ failure :: String -> EvalM a
 failure = Free . ErrorOp
 
 catch :: EvalM a -> EvalM a -> EvalM a
-catch = error "To be completed in assignment 4."
+catch try handler = Free $ TryCatchOp try handler
 
 evalKvGet :: Val -> EvalM Val
-evalKvGet = error "To be completed in assignment 4."
+evalKvGet key = Free $ KvGetOp key pure
 
 evalKvPut :: Val -> Val -> EvalM ()
-evalKvPut = error "To be completed in assignment 4."
+evalKvPut key val = Free $ KvPutOp key val (pure ())
+
+transaction :: EvalM () -> EvalM ()
+transaction payload = Free $ TransactionOp payload (pure ())

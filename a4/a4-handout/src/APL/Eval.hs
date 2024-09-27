@@ -20,6 +20,7 @@ evalIntBinOp' f e1 e2 =
   where
     f' x y = pure $ f x y
 
+-- Replace with your 'eval' from your solution to assignment 2.
 eval :: Exp -> EvalM Val
 eval (CstInt x) = pure $ ValInt x
 eval (CstBool b) = pure $ ValBool b
