@@ -1,0 +1,24 @@
+Test suite a5-test: RUNNING...
+APL properties
+  expCoverage:       OK (2.29s)
+    +++ OK, passed 100000 tests:
+    80.783% type error
+    73.597% domain error
+    69.239% no variable error
+    50.504% non-trivial variable
+    30.761% variable error
+    26.403% no domain error
+    19.217% no type error
+    
+    Only 19.217% no type error, but expected 20.000%
+  onlyCheckedErrors: FAIL (0.02s)
+    *** Failed! Falsified (after 8635 tests and 6 shrinks):
+    Apply (TryCatch (Lambda "or3" (Eql (CstBool False) (CstInt 4))) (CstBool True)) (CstInt 13)
+    Use --quickcheck-replay="(SMGen 11713997379712381847 1809931628129632395,34)" to reproduce.
+    Use -p '/onlyCheckedErrors/' to rerun this test only.
+  parsePrinted:      OK (17.90s)
+    +++ OK, passed 100000 tests.
+
+1 out of 3 tests failed (20.21s)
+Test suite a5-test: FAIL
+Test suite logged to: C:\Users\NIN\Desktop\code\ap_dnur\ap-e2024-pub-main\a5\a5-handout\dist-newstyle\build\x86_64-windows\ghc-9.6.6\a5-1.0.0.0\t\a5-test\test\a5-1.0.0.0-a5-test.log
